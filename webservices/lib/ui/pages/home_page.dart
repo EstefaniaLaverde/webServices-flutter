@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:webservices/domain/controllers/news_controller.dart';
 import 'package:get/get.dart';
 import 'empy_view.dart';
 import 'loaded_view.dart';
 import 'loading_view.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+  NewsController newsCtrl = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +17,17 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             Image(image: AssetImage("assets/images/logo.png")),
-            //Container(child: Text('Logic goes here')) //Aqui se muestra la informacion pagina loaded view
-            Container(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {}, child: Text('Get Football News'))
-                ],
-              ),
-            )
+            Container(child: Obx(() {
+              if (newsCtrl.loading) {
+                return LoadingView();
+              } else {
+                if (newsCtrl.news.isEmpty) {
+                  return EmptyNews();
+                } else {
+                  return LoadedView();
+                }
+              }
+            }))
           ],
         ),
       ),

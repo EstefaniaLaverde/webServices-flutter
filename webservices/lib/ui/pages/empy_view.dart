@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
+import 'package:webservices/domain/controllers/news_controller.dart';
 
 class EmptyNews extends StatelessWidget {
-  const EmptyNews({Key? key}) : super(key: key);
+  EmptyNews({Key? key}) : super(key: key);
+  NewsController newsCtrl = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class EmptyNews extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            print("getting news");
+            newsCtrl.getNews();
           },
           child: const Text("Football news"),
         ),
